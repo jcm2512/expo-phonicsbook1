@@ -10,6 +10,8 @@ import * as SplashScreen from "expo-splash-screen";
 
 //
 import Phonics from "./Phonics";
+import Phonics2 from "./Phonics2";
+
 SplashScreen.preventAutoHideAsync();
 
 function HomeScreen({ navigation }) {
@@ -65,6 +67,11 @@ function HomeScreen({ navigation }) {
           buttonStyle={{ borderRadius: 50 }}
           onPress={() => navigation.navigate("Phonics")}
         />
+        <Button
+          title="Phonics Book 2"
+          buttonStyle={{ borderRadius: 50 }}
+          onPress={() => navigation.navigate("Phonics2")}
+        />
       </View>
       <View style={[styles.autowidth, styles.footer]}></View>
 
@@ -79,9 +86,10 @@ export default function App() {
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Phonics2">
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Phonics" component={Phonics} />
+          <Stack.Screen name="Phonics2" component={Phonics2} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
