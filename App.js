@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { Button } from "@rneui/base";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -8,6 +8,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
+//
+import Phonics from "./Phonics";
 SplashScreen.preventAutoHideAsync();
 
 function HomeScreen({ navigation }) {
@@ -61,20 +63,11 @@ function HomeScreen({ navigation }) {
         <Button
           title="Phonics Book 1"
           buttonStyle={{ borderRadius: 50 }}
-          onPress={() => navigation.navigate("Phonics 1")}
+          onPress={() => navigation.navigate("Phonics")}
         />
       </View>
       <View style={[styles.autowidth, styles.footer]}></View>
 
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-function Phonics_1() {
-  return (
-    <View style={styles.container}>
-      <Text>Welcome to Phonics 1</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -88,7 +81,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Phonics 1" component={Phonics_1} />
+          <Stack.Screen name="Phonics" component={Phonics} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
@@ -96,6 +89,11 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  tinyLogo: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
   headerTextTitle: {
     fontFamily: "Lexend-Medium",
     fontSize: 48,
