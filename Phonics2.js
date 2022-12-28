@@ -1,12 +1,48 @@
 import * as React from "react";
-import { Component } from "react";
+import { useRef, useState } from "react";
+
 import {
   ImageBackground,
   View,
   TouchableOpacity,
   Image,
   Dimensions,
+  Animated,
+  PanResponder,
+  StyleSheet,
 } from "react-native";
+
+const PinchZoomView = ({ children }) => {
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        return Math.abs(gestureState.dx) > 10 || Math.abs(gestureState.dy) > 10;
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        // Update the scale of the view based on the pinch gesture
+        const { scale } = gestureState;
+        setScale(scale);
+      },
+    })
+  ).current;
+
+  const [scale, setScale] = useState(new Animated.Value(1));
+
+  return (
+    <Animated.View
+      style={[styles.container, { transform: [{ scale }] }]}
+      {...panResponder.panHandlers}
+    >
+      {children}
+    </Animated.View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 function Phonics2() {
   const IMAGE = require("./assets/png/phonics_1_5.png");
@@ -15,10 +51,10 @@ function Phonics2() {
       id: "0",
       name: "G",
       shape: "rectangle",
-      width: 170,
-      height: 120,
-      x1: 0,
-      y1: 0,
+      width: 175,
+      height: 55,
+      x1: 45,
+      y1: 250,
       prefill: "red",
       fill: "blue",
     },
@@ -33,38 +69,28 @@ function Phonics2() {
     },
   ];
 
-  let imgWidth = null,
-    imgHeight = null;
-
-  Image.getSize(IMAGE, (imageWidth, imageHeight) => {
-    imgWidth = imageWidth;
-    imgHeight = imageHeight;
-  });
-
-  const { screenWidth } = Dimensions.get("window");
-
   return (
     <View style={{ width: "100%" }}>
-      <View style={{ flex: 1 }}>
-        <ImageBackground style={{ height: 1024, width: 724 }} source={IMAGE}>
-          {MAPPING.map((item, index) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={(event) => console.log("pres", imgWidth)}
-              style={[
-                {
-                  position: "absolute",
-                  border: "2px solid red",
-                  width: item.width,
-                  height: item.height,
-                  left: item.x1,
-                  top: item.y1,
-                },
-              ]}
-            />
-          ))}
-        </ImageBackground>
-      </View>
+      <PinchZoomView>
+        <Image style={{ height: 1024, width: 724 }} source={IMAGE} />
+
+        {/* {MAPPING.map((item, index) => (
+          <TouchableOpacity
+            key={item.id}
+            onPress={(event) => console.log("pressed", item.id)}
+            style={[
+              {
+                position: "absolute",
+                border: "2px solid red",
+                width: item.width,
+                height: item.height,
+                left: item.x1,
+                top: item.y1,
+              },
+            ]}
+          />
+        ))} */}
+      </PinchZoomView>
     </View>
   );
 }
