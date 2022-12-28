@@ -8,8 +8,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
-import ImageMapper from "./ImageMapper";
-
 SplashScreen.preventAutoHideAsync();
 
 function HomeScreen({ navigation }) {
@@ -63,7 +61,7 @@ function HomeScreen({ navigation }) {
         <Button
           title="Phonics Book 1"
           buttonStyle={{ borderRadius: 50 }}
-          onPress={() => navigation.navigate("ImageMapper")}
+          onPress={() => navigation.navigate("Phonics 1")}
         />
       </View>
       <View style={[styles.autowidth, styles.footer]}></View>
@@ -89,7 +87,6 @@ export default function App() {
     <View style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="ImageMapper" component={ImageMapper} />
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Phonics 1" component={Phonics_1} />
         </Stack.Navigator>
